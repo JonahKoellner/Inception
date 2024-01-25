@@ -1,0 +1,36 @@
+Mandatory Part Recap:
+
+Rules:
+
+The whole project has to be done in a virtual machine (needs to run in there)
+
+Have to use 'docker compose'
+
+Each Docker image must have the same name as its corresponding service
+
+Choose either Alpine or Debian
+
+Write your own Dockerfile per service one.
+Those files need to be called with docker-compose.yml by the Makefile
+
+FORBIDDEN TO USE ALREADY MADE DOCKER IMAGES (only Alpine / Debain base)
+
+Tasks:
+
+	Container with NGINX using TLSv1.2 or TLSv1.3 only
+
+	Container that contains WordPress + php-fpm (installed and configured) only without nginx.
+
+	Container with MariaDB no nginx
+
+	Volumne with WordPress Database
+
+	volumne that contains the WordPress website files
+
+	docker-network connecting the containers
+	
+
+	CONTAINER NEED TO RESTART IN CASE OF CRASH
+
+
+
