@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+    custom-nginx:
+        build:
+            context: requirements/nginx
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        volumes:
+            - ./html:/usr/share/nginx/html
+        restart: always
