@@ -11,3 +11,9 @@ services:
         volumes:
             - ./html:/usr/share/nginx/html
         restart: always
+    wordpress:
+        build:
+            context: requirements/wordpress
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
