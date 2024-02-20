@@ -4,7 +4,7 @@ if service mariadb start; then
 	echo "MariaDB started"
 	# Change configuration for the mariadb
 	sed -i "s|skip-networking|# skip-networking|g" /etc/mysql/mariadb.conf.d/50-server.cnf
-	sed -i "s|*bind-address*|# bind-address=0.0.0.0|g" /etc/mysql/mariadb.conf.d/50-server.cnf
+	sed -i "s|*bind-address\s*=.*|# bind-address=0.0.0.0|g" /etc/mysql/mariadb.conf.d/50-server.cnf
 	sed -i '/[client-server]/a\
 		port =  3306\n\
 		# socket = /run/mysqld/mysqld.sock\n\
@@ -39,7 +39,7 @@ else
 	echo "MariaDB failed to start"
 fi
 
-if mariadb --bind-address=0.0.0.0; then
+if mariadbd --bind-address=0.0.0.0; then
 	echo "MariaDB started as deamon"
 else
 	echo "MariaDB failed to run"
