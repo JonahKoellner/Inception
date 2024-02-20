@@ -6,7 +6,7 @@
 #    By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/20 09:44:32 by jkollner          #+#    #+#              #
-#    Updated: 2024/02/20 12:32:35 by jkollner         ###   ########.fr        #
+#    Updated: 2024/02/20 15:12:43 by jkollner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ fclean:
 	@docker volume prune --force
 	@docker network prune --force
 	@if [ "`docker volume ls -q`" ]; then \
-		docker volumen rm `docker volume ls -q`; \
+		docker volume rm `docker volume ls -q`; \
 	fi
 	@echo "Fully Cleaned"
 

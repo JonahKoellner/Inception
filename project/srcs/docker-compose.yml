@@ -23,14 +23,21 @@ services:
             - .env
         restart: always
         volumes:
-            - mariadb_data:/var/lib/mysql
+            - ${HOME}/jkollner/data/mariadb:/var/lib/mysql
         networks:
             - incept_network
         init: true
+
 volumes:
-    mariadb_data:
-        name: mariadb_data
+    mariadb:
+        driver: local
+        name: mariadb
+        driver_opts:
+            type: none
+            device: ${HOME}/jkollner/data/mariadb
+            o: bind
 
 networks:
     incept_network:
+        name: inception
         driver: bridge
