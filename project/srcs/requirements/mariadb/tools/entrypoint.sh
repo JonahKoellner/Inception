@@ -5,7 +5,7 @@ if service mariadb start; then
 	# Change configuration for the mariadb
 	sed -i "s|skip-networking|# skip-networking|g" /etc/mysql/mariadb.conf.d/50-server.cnf
 	sed -i "s|*bind-address\s*=.*|# bind-address=0.0.0.0|g" /etc/mysql/mariadb.conf.d/50-server.cnf
-	sed -i '/[client-server]/a\
+	sed -i "/[client-server]/a\
 		port =  3306\n\
 		# socket = /run/mysqld/mysqld.sock\n\
 		\n\
@@ -16,7 +16,7 @@ if service mariadb start; then
 		user = root\n\
 		\n\
 		[server]\n\
-		bind-address =  0.0.0.0' /etc/mysql/my.cnf
+		bind-address =  0.0.0.0" /etc/mysql/my.cnf
 
 	# Create the database
 	# Delete Standard Database

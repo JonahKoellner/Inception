@@ -2,6 +2,7 @@ version: '3'
 
 services:
     nginx:
+        container_name: nginx
         build:
             context: requirements/nginx
             dockerfile: Dockerfile
@@ -12,7 +13,9 @@ services:
         restart: always
         networks:
             - incept_network
+        init: true
     mariadb:
+        container_name: mariadb
         build:
             context: requirements/mariadb
             dockerfile: Dockerfile
@@ -23,9 +26,10 @@ services:
             - mariadb_data:/var/lib/mysql
         networks:
             - incept_network
-
+        init: true
 volumes:
     mariadb_data:
+        name: mariadb_data
 
 networks:
     incept_network:
