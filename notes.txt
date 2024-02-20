@@ -17,7 +17,7 @@ FORBIDDEN TO USE ALREADY MADE DOCKER IMAGES (only Alpine / Debain base)
 
 Tasks:
 
-	Container with NGINX using TLSv1.2 or TLSv1.3 only
+	Container with NGINX using TLSv1.2 or TLSv1.3 only ==> done
 
 	Container that contains WordPress + php-fpm (installed and configured) only without nginx.
 
@@ -28,7 +28,7 @@ Tasks:
 	volumne that contains the WordPress website files
 
 	docker-network connecting the containers
-	
+
 
 	CONTAINER NEED TO RESTART IN CASE OF CRASH
 

@@ -6,7 +6,7 @@
 #    By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/20 09:44:32 by jkollner          #+#    #+#              #
-#    Updated: 2024/02/20 11:11:17 by jkollner         ###   ########.fr        #
+#    Updated: 2024/02/20 12:32:35 by jkollner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,11 @@ DOCKER_COMPOSE_FILE = srcs/docker-compose.yml
 ENV:=srcs/.env
 DATA:=./data
 
+HOSTNAME:=jkollner.42.fr
+
 all: prerequisits build up
 
-prerequisits: $(ENV) update_host $(DATA)
+prerequisits: $(ENV) $(DATA)
 
 up:
 	docker-compose -f $(DOCKER_COMPOSE_FILE) --env-file $(ENV) up --build
@@ -36,12 +38,12 @@ $(ENV):
 	@read -s -p "Enter DB_PASSWORD: " value; echo DB_PASSWORD=$$value >> $(ENV)
 
 fclean:
-	rm -rf $(HOME)/data/wordpress_db
-	rm -rf $(HOME)/data/wordpress_files
-	rm -f $(ENV)
-	docker system prune --all --force --volumes
-	docker volume prune --force
-	docker network prune --force
+	@rm -rf $(HOME)/data/wordpress_db
+	@rm -rf $(HOME)/data/wordpress_files
+	@rm -f $(ENV)
+	@docker system prune --all --force --volumes
+	@docker volume prune --force
+	@docker network prune --force
 	@if [ "`docker volume ls -q`" ]; then \
 		docker volumen rm `docker volume ls -q`; \
 	fi
@@ -49,6 +51,7 @@ fclean:
 
 update_host:
 	@echo "Updating /etc/hosts..."
+	@grep -q 'jkollner.42.fr' /etc/hosts && echo 'Domain name already set' || echo "127.0.0.1 jkollner.42.fr" >> /etc/hosts
 
 $(DATA):
 	@echo "Creating data directory..."
