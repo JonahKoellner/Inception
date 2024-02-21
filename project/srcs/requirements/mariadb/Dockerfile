@@ -5,6 +5,10 @@ RUN apt-get install -y mariadb-server
 RUN apt-get install -y mariadb-client
 RUN rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /var/run/mysqld \
+		&& chown -R mysql:mysql /var/run/mysqld \
+		&& chmod 777 /var/run/mysqld
+
 ARG MYSQL_ROOT_PASSWORD
 
 ENV MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
@@ -16,3 +20,4 @@ EXPOSE 3306
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
+

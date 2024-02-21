@@ -6,7 +6,7 @@
 #    By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/20 09:44:32 by jkollner          #+#    #+#              #
-#    Updated: 2024/02/20 15:12:43 by jkollner         ###   ########.fr        #
+#    Updated: 2024/02/21 12:18:36 by jkollner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,7 @@ $(ENV):
 	@read -s -p "Enter DB_PASSWORD: " value; echo DB_PASSWORD=$$value >> $(ENV)
 
 fclean:
-	@rm -rf $(HOME)/data/wordpress_db
-	@rm -rf $(HOME)/data/wordpress_files
+	@rm -rf $(HOME)/data
 	@rm -f $(ENV)
 	@docker system prune --all --force --volumes
 	@docker volume prune --force
@@ -57,5 +56,6 @@ $(DATA):
 	@echo "Creating data directory..."
 	@mkdir -p $(HOME)/data/wordpress_db
 	@mkdir -p $(HOME)/data/wordpress_files
+	@mkdir -p $(HOME)/data/mariadb
 
 .PHONY: all clean fclean re up down build
