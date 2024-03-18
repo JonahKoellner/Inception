@@ -13,11 +13,11 @@ ARG MYSQL_ROOT_PASSWORD
 
 ENV MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
 
-COPY tools/entrypoint.sh /entrypoint.sh
+COPY tools/entrypoint.sh /tmp/entrypoint.sh
 
 EXPOSE 3306
 
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /tmp/entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/tmp/entrypoint.sh"]
 

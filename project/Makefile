@@ -16,18 +16,19 @@ DATA:=./data
 
 HOSTNAME:=jkollner.42.fr
 
-all: prerequisits build up
+all: prerequisits update_host up
 
 prerequisits: $(ENV) $(DATA)
 
 up:
-	docker-compose -f $(DOCKER_COMPOSE_FILE) --env-file $(ENV) up --build
+	docker compose -f $(DOCKER_COMPOSE_FILE) --env-file $(ENV) up -d --build
 
 down:
-	docker-compose -f $(DOCKER_COMPOSE_FILE) down
+	docker compose -f $(DOCKER_COMPOSE_FILE) down
 
-build:
-	docker-compose -f $(DOCKER_COMPOSE_FILE) build
+re: fclean all
+# build:
+# 	docker-compose -f $(DOCKER_COMPOSE_FILE) build
 
 $(ENV):
 	@echo "Creating ENV file..."
@@ -35,7 +36,7 @@ $(ENV):
 	@read -p "Enter DB_DATABASE: " value; echo DB_DATABASE=$$value >> $(ENV)
 	@read -p "Enter DB_HOSTNAME: " value; echo DB_HOSTNAME=$$value >> $(ENV)
 	@read -p "Enter DB_USER: " value; echo DB_USER=$$value >> $(ENV)
-	@read -s -p "Enter DB_PASSWORD: " value; echo DB_PASSWORD=$$value >> $(ENV)
+	@read -p "Enter DB_PASSWORD: " value; echo DB_PASSWORD=$$value >> $(ENV)
 
 fclean:
 	@rm -rf $(HOME)/data
@@ -50,7 +51,7 @@ fclean:
 
 update_host:
 	@echo "Updating /etc/hosts..."
-	@grep -q 'jkollner.42.fr' /etc/hosts && echo 'Domain name already set' || echo "127.0.0.1 jkollner.42.fr" >> /etc/hosts
+	@grep -q '$(HOSTNAME)' /etc/hosts && echo 'Domain name already set' || echo "127.0.0.1	$(HOSTNAME)" >> /etc/hosts
 
 $(DATA):
 	@echo "Creating data directory..."

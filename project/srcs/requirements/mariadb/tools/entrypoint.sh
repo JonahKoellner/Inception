@@ -1,13 +1,13 @@
 #!/bin/bash
 
-set -e
+# set -e
 
-# Initialize the database if it's the first run
-if [ ! -d "/var/lib/mysql/mysql" ]; then
-  echo "Initializing database..."
-  mysql_install_db --user=mysql --datadir=/var/lib/mysql
-  echo "Database initialized."
-fi
+# # Initialize the database if it's the first run
+# if [ ! -d "/var/lib/mysql/mysql" ]; then
+#   echo "Initializing database..."
+#   mysql_install_db --user=mysql --datadir=/var/lib/mysql
+#   echo "Database initialized."
+# fi
 
 # Start the MariaDB server
 #echo "Starting MariaDB server..."
@@ -38,15 +38,23 @@ if service mariadb start; then
 	echo "MariaDB configuration updated"
 	# Create the database
 	# Delete Standard Database
-	mariadb -u root -p$DB_PASSWORD -e "DROP DATABASE IF EXISTS test;"
+	# mariadb -u root -p$DB_PASSWORD -e "DROP DATABASE IF EXISTS test;"
 	# Create the database if it doesn't exist
-	mariadb -u root -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS wordpress;"
-	# Create the user if it doesn't exist and grant all privileges
-	mariadb -u root -p$DB_PASSWORD -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_USER';"
-	mariadb -u root -p$DB_PASSWORD -e "GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'%';"
-	mariadb -u root -p$DB_PASSWORD -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
-	mariadb -u root -p$DB_PASSWORD -e "FLUSH PRIVILEGES;"
-	mariadb -u root -p$DB_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$DB_PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+	    # Create database if not exists
+    mariadb -u root -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
+
+    # Create user and grant privileges for '%' (any host)
+    mariadb -u root -p$DB_PASSWORD -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
+    mariadb -u root -p$DB_PASSWORD -e "GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'%';"
+
+    # Create user and grant privileges for 'localhost'
+    mariadb -u root -p$DB_PASSWORD -e "CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
+    mariadb -u root -p$DB_PASSWORD -e "GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'localhost';"
+
+    mariadb -u root -p$DB_PASSWORD -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
+    mariadb -u root -p$DB_PASSWORD -e "FLUSH PRIVILEGES;"
+
+    mariadb -u root -p$DB_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$DB_PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 	echo "MariaDB database and user created"
 
 	echo "Stopping MariaDB server..."

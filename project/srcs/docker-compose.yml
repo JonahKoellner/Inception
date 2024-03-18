@@ -1,21 +1,49 @@
 version: '3'
 
 services:
+
+    env:
+        image: debian:11
+        env_file:
+            - .env
+        environment:
+            - DB_DATABASE
+            - DB_HOSTNAME
+            - DB_USER
+            - WP_USER
+            - WP_USER_EMAIL
+            - WP_ADMIN
+            - WP_ADMIN_EMAIL
+        networks:
+            - incept_network
+        entrypoint: ["echo", ".env is set with correct variables"]
+
     nginx:
         container_name: nginx
+        depends_on: 
+            - wordpress
         build:
             context: requirements/nginx
             dockerfile: Dockerfile
         ports:
             - "443:443"
         volumes:
-            - ./html:/usr/share/nginx/html
+            - wordpress_files:/var/www/html
+            - wordpress_db:/var/lib/mysql
         restart: always
         networks:
             - incept_network
         init: true
+        env_file: .env
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost"]
+            interval: 42s
+            timeout: 10s
+            retries: 3
     mariadb:
         container_name: mariadb
+        depends_on: 
+            - env
         build:
             context: requirements/mariadb
             dockerfile: Dockerfile
@@ -23,18 +51,40 @@ services:
             - .env
         restart: always
         volumes:
-            - ${HOME}/data/mariadb:/var/lib/mysql
+            - wordpress_db:/var/lib/mysql
         networks:
             - incept_network
         init: true
+    wordpress:
+        container_name: wordpress
+        depends_on: 
+            - mariadb
+        build:
+            context: requirements/wordpress
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        restart: always
+        volumes: 
+            - wordpress_files:/var/www/html
+        networks: 
+            - incept_network
 
 volumes:
-    mariadb:
+    wordpress_db:
         driver: local
-        name: mariadb
+        name: wordpress_db
         driver_opts:
             type: none
-            device: ${HOME}/data/mariadb
+            device: ${HOME}/data/wordpress_db
+            o: bind
+    wordpress_files:
+        driver:
+            local
+        name: wordpress_files
+        driver_opts:
+            type: none
+            device: ${HOME}/data/wordpress_files
             o: bind
 
 networks:

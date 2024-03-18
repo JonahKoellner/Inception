@@ -1,30 +1,22 @@
 FROM debian:11
 
+RUN apt-get update -y 
+RUN apt-get upgrade -y
 
+# Install necessary software
+RUN apt-get install php7.4-fpm -y
+RUN apt-get install php7.4-mysql -y
+RUN apt-get install php7.4-mysqli -y
+RUN apt-get install curl -y
+# for the mysqli admin check for mariadb
+RUN apt-get install mariadb-client -y
 
-RUN apt-get update && apt-get install -y \
-	wget \
-	unzip \
-	apache2 \
-	php7.3 \
-	php7.3-mysql \
-	libapache2-mod-php7.3 \
-	php7.3-cli \
-	php7.3-cgi \
-	php7.3-gd
+EXPOSE 9000
 
-WORKDIR /var/www/html
-RUN wget https://wordpress.org/latest.tar.gz && \
-	tar -xzvf latest.tar.gz && \
-	rm latest.tar.gz && \
-	chown -R www-data:www-data /var/www/html
+COPY ./tools/wp_configure.sh /tmp/wp_configure.sh
+RUN chmod +x /tmp/wp_configure.sh
 
-RUN a2enmod rewrite && \
-	service apache2 restart
+RUN mkdir -p /var/www/html/
+WORKDIR /var/www/html/
 
-
-COPY wp-config.php /var/www/html/wordpress/
-
-EXPOSE 80
-
-CMD ["apachectl", "-D", "FOREGROUND"]
+ENTRYPOINT ["/tmp/wp_configure.sh"]
