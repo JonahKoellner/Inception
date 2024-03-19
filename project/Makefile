@@ -37,7 +37,12 @@ $(ENV):
 	@read -p "Enter DB_HOSTNAME: " value; echo DB_HOSTNAME=$$value >> $(ENV)
 	@read -p "Enter DB_USER: " value; echo DB_USER=$$value >> $(ENV)
 	@read -p "Enter DB_PASSWORD: " value; echo DB_PASSWORD=$$value >> $(ENV)
-
+	@read -p "Enter WP_ADMINNAME: " value; echo WP_ADMINNAME=$$value >> $(ENV)
+	@read -p "Enter WP_ADMINMAIL: " value; echo WP_ADMINMAIL=$$value >> $(ENV)
+	@read -p "Enter WP_ADMINPASS: " value; echo WP_ADMINPASS=$$value >> $(ENV)
+	@read -p "Enter WP_USERNAME: " value; echo WP_USERNAME=$$value >> $(ENV)
+	@read -p "Enter WP_USERMAIL: " value; echo WP_USERMAIL=$$value >> $(ENV)
+	@read -p "Enter WP_USERPASS: " value; echo WP_USERPASS=$$value >> $(ENV)
 fclean:
 	@rm -rf $(HOME)/data
 	@rm -f $(ENV)

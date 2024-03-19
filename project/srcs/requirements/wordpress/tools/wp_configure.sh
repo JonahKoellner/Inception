@@ -48,11 +48,11 @@ echo "-------------------------------------------------"
 
 echo "INFO: Installing WordPress..."
 while ! wp core install --allow-root \
-        --url="pgorner.42.fr" \
+        --url="jkollner.42.fr" \
         --title="Inception" \
-        --admin_user="${WP_ADMIN_USR}" \
-        --admin_password="${WP_ADMIN_PWD}" \
-        --admin_email="${WP_ADMIN_EMAIL}"
+        --admin_user="${WP_ADMINNAME}" \
+        --admin_password="${WP_ADMINPASS}" \
+        --admin_email="${WP_ADMINMAIL}"
 do
     echo 1>&2 "Wordpress: Waiting for database ..."
     sleep 1
@@ -61,25 +61,17 @@ echo "INFO: Installed WordPress"
 
 echo "-------------------------------------------------"
 
-if ! wp user list --allow-root | grep -q "$WP_USER_NAME"; then
-    echo "INFO: Setting up ${WP_USER_NAME}"
-    wp user create "${WP_USER_NAME}" \
-                    "${WP_USER_EMAIL}" \
-                    --user_pass="$WP_USER_PASSWORD" \
+if ! wp user list --allow-root | grep -q "$WP_USERNAME"; then
+    echo "INFO: Setting up ${WP_USERNAME}"
+    wp user create "${WP_USERNAME}" \
+                    "${WP_USERMAIL}" \
+                    --user_pass="$WP_USERPASS" \
                     --allow-root
 else
-    echo "INFO: ${WP_USER_NAME} has already been set up"
+    echo "INFO: ${WP_USERNAME} has already been set up"
 fi
 
 echo "-------------------------------------------------"
-
-# echo "INFO: Installing theme"
-
-# wp theme install blockskit-base --activate --allow-root --quiet
-
-# echo "INFO: Installed theme"
-
-# echo "-------------------------------------------------"
 
 echo "INFO: Making /run/php dir"
 
