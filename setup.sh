@@ -13,7 +13,7 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 sudo usermod -aG sudo $USER
 
-shutdown -r -f 00
+sudo shutdown -r -f 00
 
 newgrp docker
 
