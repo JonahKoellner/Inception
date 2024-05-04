@@ -2,7 +2,8 @@
 
 sudo apt-get install curl
 sudo apt-get install build-essential
-
+sudo apt-get install vim
+sudo apt-get install mariadb-server
 
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
