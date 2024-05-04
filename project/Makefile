@@ -56,6 +56,10 @@ fclean:
 
 update_host:
 	@echo "Updating /etc/hosts..."
+	if [ "$EUID" != 0 ]; then
+    		sudo @grep -q '$(HOSTNAME)' /etc/hosts && echo 'Domain name already set' || echo "127.0.0.1	$(HOSTNAME)" >> /etc/hosts
+   		exit $?
+	fi
 	@grep -q '$(HOSTNAME)' /etc/hosts && echo 'Domain name already set' || echo "127.0.0.1	$(HOSTNAME)" >> /etc/hosts
 
 $(DATA):
