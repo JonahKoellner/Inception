@@ -6,7 +6,7 @@
 #    By: jkollner <jkollner@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/20 09:44:32 by jkollner          #+#    #+#              #
-#    Updated: 2024/03/11 15:37:47 by jkollner         ###   ########.fr        #
+#    Updated: 2024/05/08 15:09:01 by jkollner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ fclean:
 update_host:
 	@echo "Updating /etc/hosts..."
 	@if [ "$EUID" != 0 ]; then \
-	sudo grep -q '$(HOSTNAME)' /etc/hosts && echo 'Domain name already set' || echo "127.0.0.1	$(HOSTNAME)" >> /etc/hosts; \
+		sudo grep -q '$(HOSTNAME)' /etc/hosts && echo 'Domain name already set' || echo "127.0.0.1	$(HOSTNAME)" >> /etc/hosts; \
 	echo "Updated hosts"; \
 	fi
 
