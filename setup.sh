@@ -10,8 +10,8 @@ sudo sh get-docker.sh
 
 sudo groupadd docker
 
-sudo usermod -aG docker $USER
-sudo usermod -aG sudo $USER
+sudo usermod -aG docker vboxuser
+sudo usermod -aG sudo vboxuser
 
 sudo shutdown -r -f 00
 
