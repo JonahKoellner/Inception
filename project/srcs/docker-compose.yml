@@ -35,11 +35,11 @@ services:
             - incept_network
         init: true
         env_file: .env
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost"]
-            interval: 42s
-            timeout: 10s
-            retries: 3
+        # healthcheck:
+        #     test: ["CMD", "curl", "-f", "http://localhost"]
+        #     interval: 42s
+        #     timeout: 10s
+        #     retries: 3
     mariadb:
         container_name: mariadb
         depends_on: 

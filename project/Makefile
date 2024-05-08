@@ -45,7 +45,6 @@ $(ENV):
 	@read -p "Enter WP_USERPASS: " value; echo WP_USERPASS=$$value >> $(ENV)
 fclean:
 	@rm -rf $(HOME)/data
-	@rm -f $(ENV)
 	@docker system prune --all --force --volumes
 	@docker volume prune --force
 	@docker network prune --force
@@ -65,6 +64,5 @@ $(DATA):
 	@echo "Creating data directory..."
 	@mkdir -p $(HOME)/data/wordpress_db
 	@mkdir -p $(HOME)/data/wordpress_files
-	@mkdir -p $(HOME)/data/mariadb
 
 .PHONY: all clean fclean re up down build

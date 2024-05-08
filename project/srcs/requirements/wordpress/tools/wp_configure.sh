@@ -48,7 +48,7 @@ echo "-------------------------------------------------"
 
 echo "INFO: Installing WordPress..."
 while ! wp core install --allow-root \
-        --url="jkollner.42.fr" \
+        --url="https://jkollner.42.fr" \
         --title="Inception" \
         --admin_user="${WP_ADMINNAME}" \
         --admin_password="${WP_ADMINPASS}" \
@@ -60,6 +60,10 @@ done
 echo "INFO: Installed WordPress"
 
 echo "-------------------------------------------------"
+
+wp option update home "https://jkollner.42.fr" --allow-root
+wp option update siteurl "https://jkollner.42.fr" --alllow-root
+
 
 if ! wp user list --allow-root | grep -q "$WP_USERNAME"; then
     echo "INFO: Setting up ${WP_USERNAME}"

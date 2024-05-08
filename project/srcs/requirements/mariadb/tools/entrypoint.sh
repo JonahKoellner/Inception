@@ -1,21 +1,5 @@
 #!/bin/bash
 
-# set -e
-
-# # Initialize the database if it's the first run
-# if [ ! -d "/var/lib/mysql/mysql" ]; then
-#   echo "Initializing database..."
-#   mysql_install_db --user=mysql --datadir=/var/lib/mysql
-#   echo "Database initialized."
-# fi
-
-# Start the MariaDB server
-#echo "Starting MariaDB server..."
-#mysqld_safe --datadir=/var/lib/mysql &
-
-# Wait for MariaDB to start
-#sleep  10
-
 if service mariadb start; then
 	echo "MariaDB started"
 	# Change configuration for the mariadb
@@ -48,8 +32,8 @@ if service mariadb start; then
     mariadb -u root -p$DB_PASSWORD -e "GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'%';"
 
     # Create user and grant privileges for 'localhost'
-    mariadb -u root -p$DB_PASSWORD -e "CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
-    mariadb -u root -p$DB_PASSWORD -e "GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'localhost';"
+    # mariadb -u root -p$DB_PASSWORD -e "CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
+    # mariadb -u root -p$DB_PASSWORD -e "GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'localhost';"
 
     mariadb -u root -p$DB_PASSWORD -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
     mariadb -u root -p$DB_PASSWORD -e "FLUSH PRIVILEGES;"
